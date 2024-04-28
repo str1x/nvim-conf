@@ -13,3 +13,6 @@ opt.relativenumber = true
 opt.termguicolors = true -- True color support
 opt.autoindent = true    --- Good auto indent
 opt.colorcolumn = { 120 }
+
+vim.o.termguicolors = true
+vim.o.background = "dark"

@@ -5,12 +5,18 @@
 local M = {}
 
 M.ui = {
-	theme = "penumbra_light",
-
+	theme = "everforest_light",
 	-- hl_override = {
 	-- 	Comment = { italic = true },
 	-- 	["@comment"] = { italic = true },
-	-- },
+	-- }, 
+  theme_toggle = { "everforest", "everforest_light" },
+  telescope = { style = "bordered" },
+  transparency = false,
+  statusline = {
+    theme = "default",
+    separator_style = "arrow",
+  },
 }
 
 return M
