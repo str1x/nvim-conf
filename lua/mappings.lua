@@ -13,25 +13,58 @@ map("i", "<C-x>", "<Del>", { noremap = true })
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 
 local isLspDiagnosticsVisible = vim.diagnostic.virtual_text
-vim.keymap.set("n", "<leader>lx", function()
+map("n", "<leader>lx", function()
   isLspDiagnosticsVisible = not isLspDiagnosticsVisible
   vim.diagnostic.config {
     virtual_text = isLspDiagnosticsVisible,
   }
 end, { desc = "hide diagnostic text" })
 
-vim.keymap.set(
+map(
   "n",
   "<C-d>",
   "<cmd>lua require('neoscroll').scroll(vim.wo.scroll, 'true', '50')<cr>",
   { remap = true, noremap = true, silent = true }
 )
-vim.keymap.set(
+map(
   "n",
   "<C-u>",
   "<cmd>lua require('neoscroll').scroll(-vim.wo.scroll, 'true', '50')<cr>",
   { remap = true, noremap = true, silent = true }
 )
 
-vim.keymap.set("n", "<leader>rd", "<cmd> DapToggleBreakpoint <CR>", { desc = "Add breakpoint at line" })
-vim.keymap.set("n", "<leader>rD", "<cmd> DapContinue <CR>", { desc = "Start or continue the debugger" })
+map("n", "<leader>rd", "<cmd> DapToggleBreakpoint <CR>", { desc = "Add breakpoint at line" })
+map("n", "<leader>rD", "<cmd> DapContinue <CR>", { desc = "Start or continue the debugger" })
+
+function vim.getVisualSelection()
+	vim.cmd('noau normal! "vy"')
+	local text = vim.fn.getreg('v')
+	vim.fn.setreg('v', {})
+
+	text = string.gsub(text, "\n", "")
+	if #text > 0 then
+		return text
+	else
+		return ''
+	end
+end
+
+local tb = require('telescope.builtin')
+map(
+  'v',
+  '<space>fz',
+  function()
+    local text = vim.getVisualSelection()
+    tb.current_buffer_fuzzy_find({ default_text = text })
+  end,
+  { noremap = true, silent = true, desc = "find selected in buffer"}
+)
+map(
+  'v',
+  '<space>fw',
+  function()
+    local text = vim.getVisualSelection()
+    tb.live_grep({ default_text = text })
+  end,
+  { noremap = true, silent = true, desc = "live grep selected"}
+)

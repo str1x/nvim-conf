@@ -39,6 +39,8 @@ return {
         "css",
         "cmake",
         "cpp",
+        "markdown",
+        "markdown_inline"
       },
     },
   },
