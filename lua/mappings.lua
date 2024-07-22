@@ -32,6 +32,14 @@ map(
   "<cmd>lua require('neoscroll').scroll(-vim.wo.scroll, 'true', '50')<cr>",
   { remap = true, noremap = true, silent = true }
 )
+map(
+  "n",
+  "<leader>lf",
+  function()
+    vim.diagnostic.open_float { border = "rounded" }
+  end,
+  { remap = true, noremap = true, silent = true, desc = "Floating diagnostic" }
+)
 
 map("n", "<leader>rd", "<cmd> DapToggleBreakpoint <CR>", { desc = "Add breakpoint at line" })
 map("n", "<leader>rD", "<cmd> DapContinue <CR>", { desc = "Start or continue the debugger" })
