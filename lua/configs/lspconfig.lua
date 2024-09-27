@@ -31,10 +31,10 @@ lspconfig.volar.setup {
 }
 -- typescript
 local ts_ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" }
-local vue_ft = { unpack(ts_ft) }
+local vue_ft = { table.unpack(ts_ft) }
 table.insert(vue_ft, "vue")
 
-lspconfig.tsserver.setup {
+lspconfig.ts_ls.setup {
   on_attach = on_attach,
   on_init = on_init,
   capabilities = capabilities,
@@ -57,6 +57,24 @@ lspconfig.eslint.setup {
 }
 --cpp
 lspconfig.clangd.setup {
+  -- cmd = {
+  --   -- see clangd --help-hidden
+  --   "clangd",
+  --   "--background-index",
+  --   -- by default, clang-tidy use -checks=clang-diagnostic-*,clang-analyzer-*
+  --   -- to add more checks, create .clang-tidy file in the root directory
+  --   -- and add Checks key, see https://clang.llvm.org/extra/clang-tidy/
+  --   "--clang-tidy",
+  --   "--completion-style=bundled",
+  --   "--cross-file-rename",
+  --   "--header-insertion=iwyu",
+  -- },
+  -- init_options = {
+  --   clangdFileStatus = true, -- Provides information about activity on clangd’s per-file worker thread
+  --   usePlaceholders = true,
+  --   completeUnimported = true,
+  --   semanticHighlighting = true,
+  -- },
   on_attach = function (client, bufnr)
     -- client.server_capabilities.signatureHelpProvider = false;
     on_attach(client, bufnr)

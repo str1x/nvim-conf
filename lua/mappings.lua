@@ -23,13 +23,13 @@ end, { desc = "hide diagnostic text" })
 map(
   "n",
   "<C-d>",
-  "<cmd>lua require('neoscroll').scroll(vim.wo.scroll, 'true', '50')<cr>",
+  "<cmd>lua require('neoscroll').scroll(vim.wo.scroll, { duration = 50 })<cr>",
   { remap = true, noremap = true, silent = true }
 )
 map(
   "n",
   "<C-u>",
-  "<cmd>lua require('neoscroll').scroll(-vim.wo.scroll, 'true', '50')<cr>",
+  "<cmd>lua require('neoscroll').scroll(-vim.wo.scroll, { duration = 50 })<cr>",
   { remap = true, noremap = true, silent = true }
 )
 map(
