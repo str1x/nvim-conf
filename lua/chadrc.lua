@@ -5,12 +5,12 @@
 local M = {}
 
 M.base46 = {
-	theme = "everforest_light",
+	theme = "penumbra_light",
 	-- hl_override = {
 	-- 	Comment = { italic = true },
 	-- 	["@comment"] = { italic = true },
 	-- }, 
-  theme_toggle = { "everforest", "everforest_light" },
+  theme_toggle = { "penumbra_dark", "penumbra_light" },
   telescope = { style = "bordered" },
   transparency = false,
   statusline = {
