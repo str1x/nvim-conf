@@ -11,12 +11,17 @@ M.base46 = {
 	-- 	["@comment"] = { italic = true },
 	-- }, 
   theme_toggle = { "penumbra_dark", "penumbra_light" },
-  telescope = { style = "bordered" },
+  -- telescope = { style = "bordered" },
   transparency = false,
   statusline = {
     theme = "default",
     separator_style = "arrow",
   },
+}
+M.ui = {
+  telescope = {
+    style = 'bordered'
+  }
 }
 
 return M

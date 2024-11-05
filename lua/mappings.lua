@@ -76,3 +76,7 @@ map(
   end,
   { noremap = true, silent = true, desc = "live grep selected"}
 )
+
+
+map("n", "<leader>gb", "<cmd>Gitsigns blame_line <CR>", { desc = "git blame line" })
+map("n", "<leader>gB", "<cmd>Gitsigns blame <CR>", { desc = "git blame" })
