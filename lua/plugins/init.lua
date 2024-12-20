@@ -40,7 +40,8 @@ return {
         "cmake",
         "cpp",
         "markdown",
-        "markdown_inline"
+        "markdown_inline",
+        "gdscript"
       },
     },
   },

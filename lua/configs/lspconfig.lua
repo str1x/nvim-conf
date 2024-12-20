@@ -82,3 +82,5 @@ lspconfig.clangd.setup {
   capabilities = capabilities,
   on_init = on_init,
 }
+--godot script
+lspconfig.gdscript.setup {}
