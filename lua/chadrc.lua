@@ -5,13 +5,12 @@
 local M = {}
 
 M.base46 = {
-	theme = "penumbra_light",
-	-- hl_override = {
-	-- 	Comment = { italic = true },
-	-- 	["@comment"] = { italic = true },
-	-- }, 
+	theme = "penumbra_dark",
+	hl_override = {
+		Comment = { italic = true },
+		["@comment"] = { italic = true },
+	},
   theme_toggle = { "penumbra_dark", "penumbra_light" },
-  -- telescope = { style = "bordered" },
   transparency = false,
   statusline = {
     theme = "default",

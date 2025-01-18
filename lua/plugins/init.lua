@@ -1,4 +1,64 @@
 return {
+  "nvim-lua/plenary.nvim",
+  {
+    "nvchad/base46",
+    build = function()
+      require("base46").load_all_highlights()
+    end,
+  },
+  {
+    "nvchad/ui",
+    lazy = false,
+    config = function()
+      require "nvchad"
+    end,
+  },
+  "nvzone/volt",
+  "nvzone/menu",
+  { "nvzone/minty", cmd = { "Huefy", "Shades" } },
+  {
+    "nvim-tree/nvim-web-devicons",
+    opts = function()
+      dofile(vim.g.base46_cache .. "devicons")
+      return { override = require "nvchad.icons.devicons" }
+    end,
+  },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    event = "User FilePost",
+    opts = {
+      indent = { char = "│", highlight = "IblChar" },
+      scope = { char = "│", highlight = "IblScopeChar" },
+    },
+    config = function(_, opts)
+      dofile(vim.g.base46_cache .. "blankline")
+
+      local hooks = require "ibl.hooks"
+      hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
+      require("ibl").setup(opts)
+
+      dofile(vim.g.base46_cache .. "blankline")
+    end,
+  },
+  -- file managing , picker etc
+  {
+    "nvim-tree/nvim-tree.lua",
+    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+    opts = function()
+      return require "configs.nvimtree"
+    end,
+  },
+  -- keybingings info
+  {
+    "folke/which-key.nvim",
+    keys = { "<leader>", "<c-w>", '"', "'", "`", "c", "v", "g" },
+    cmd = "WhichKey",
+    opts = function()
+      dofile(vim.g.base46_cache .. "whichkey")
+      return {}
+    end,
+  },
+  -- formatters
   {
     "stevearc/conform.nvim",
     -- event = 'BufWritePre', -- uncomment for format on save
@@ -6,34 +66,101 @@ return {
       require "configs.conform"
     end,
   },
-
-  -- These are some examples, uncomment them if you want to see them work!
+  -- git stuff
+  {
+    "lewis6991/gitsigns.nvim",
+    event = "User FilePost",
+    opts = function()
+      return require "configs.gitsigns"
+    end,
+  },
+  -- lsp servers installer
+  {
+    "williamboman/mason.nvim",
+    cmd = { "Mason", "MasonInstall", "MasonUpdate" },
+    lazy=false,
+    opts = function()
+      return require "configs.mason"
+    end,
+  },
+  -- lsp configs
   {
     "neovim/nvim-lspconfig",
+    lazy=false,
     config = function()
-      require("nvchad.configs.lspconfig").defaults()
       require "configs.lspconfig"
     end,
   },
-
+  -- search
   {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "vue-language-server",
-        "typescript-language-server",
-        "eslint-lsp",
-        "clangd",
-        "clang-format",
-        "codelldb",
+    "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    cmd = "Telescope",
+    opts = function()
+      return require "configs.telescope"
+    end,
+  },
+  -- load luasnips + cmp related in insert mode only
+  {
+    "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
+    dependencies = {
+      {
+        -- snippet plugin
+        "L3MON4D3/LuaSnip",
+        dependencies = "rafamadriz/friendly-snippets",
+        opts = { history = true, updateevents = "TextChanged,TextChangedI" },
+        config = function(_, opts)
+          require("luasnip").config.set_config(opts)
+          require "configs.luasnip"
+        end,
+      },
+      -- autopairing of (){}[] etc
+      {
+        "windwp/nvim-autopairs",
+        opts = {
+          fast_wrap = {},
+          disable_filetype = { "TelescopePrompt", "vim" },
+        },
+        config = function(_, opts)
+          require("nvim-autopairs").setup(opts)
+          -- setup cmp for autopairs
+          local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+          require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
+        end,
+      },
+      -- cmp sources plugins
+      {
+        "saadparwaiz1/cmp_luasnip",
+        "hrsh7th/cmp-nvim-lua",
+        "hrsh7th/cmp-nvim-lsp",
+        "hrsh7th/cmp-buffer",
+        "hrsh7th/cmp-path",
       },
     },
+    opts = function()
+      return require "configs.cmp"
+    end,
   },
-
+  -- syntax highlight
+  {
+    "nvim-treesitter/nvim-treesitter",
+    event = { "BufReadPost", "BufNewFile" },
+    cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
+    build = ":TSUpdate",
+    opts = function()
+      return require "configs.treesitter"
+    end,
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+    end,
+  },
+  -- syntax highlight
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       ensure_installed = {
+        "lua",
         "vue",
         "typescript",
         "css",
@@ -45,7 +172,7 @@ return {
       },
     },
   },
-
+  -- debugger ui
   {
     "rcarriga/nvim-dap-ui",
     event = "VeryLazy",
@@ -68,7 +195,7 @@ return {
       end
     end,
   },
-
+  -- debugger lsp
   {
     "jay-babu/mason-nvim-dap.nvim",
     dependencies = {
@@ -82,7 +209,7 @@ return {
       },
     },
   },
-
+  -- debugger
   {
     "mfussenegger/nvim-dap",
     config = function()
@@ -113,36 +240,26 @@ return {
       }
     end,
   },
-
+  -- smooth scroll
   {
     "karb94/neoscroll.nvim",
     config = function()
       require("neoscroll").setup {
         easing_function = "quadratic",
       }
-
-      -- local t = {}
-      -- Syntax: t[keys] = {function, {function arguments}}
-      -- t['<C-u>'] = {'scroll', {'-vim.wo.scroll', 'true', '250'}}
-      -- t['<C-d>'] = {'scroll', { 'vim.wo.scroll', 'true', '250'}}
-      -- t['<C-b>'] = {'scroll', {'-vim.api.nvim_win_get_height(0)', 'true', '450'}}
-      -- t['<C-f>'] = {'scroll', { 'vim.api.nvim_win_get_height(0)', 'true', '450'}}
-      -- t['<C-y>'] = {'scroll', {'-0.10', 'false', '100'}}
-      -- t['<C-e>'] = {'scroll', { '0.10', 'false', '100'}}
-      -- t['zt']    = {'zt', {'250'}}
-      -- t['zz']    = {'zz', {'250'}}
-      -- t['zb']    = {'zb', {'250'}}
-
-      -- require('neoscroll.config').set_mappings(t)
     end,
   },
-
+  -- zen mode
   {
     "folke/zen-mode.nvim",
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    },
+    opts = {},
   },
+  -- ui notifications, command, hover
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = function()
+      return require "configs.noice"
+    end,
+  }
 }
