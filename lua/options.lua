@@ -2,7 +2,6 @@ local opt = vim.opt
 local o = vim.o
 local g = vim.g
 
--------------------------------------- options ------------------------------------------
 o.laststatus = 3
 o.showmode = false
 
