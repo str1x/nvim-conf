@@ -34,3 +34,5 @@ end)
 vim.diagnostic.config({
   update_in_insert = true
 })
+
+vim.lsp.set_log_level('debug')
