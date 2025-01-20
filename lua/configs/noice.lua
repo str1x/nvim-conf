@@ -14,4 +14,10 @@ return {
   notify = {
     enabled = true
   },
+  lsp = {
+    hover = {
+      --- donts show empty lsp messages
+      silent = true,
+    },
+  },
 }
