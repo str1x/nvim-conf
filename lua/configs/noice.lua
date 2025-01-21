@@ -19,5 +19,13 @@ return {
       --- donts show empty lsp messages
       silent = true,
     },
+    signature = {
+      auto_open = {
+        trigger = false
+      },
+    },
+  },
+  presets = {
+    lsp_doc_border = true,
   },
 }
