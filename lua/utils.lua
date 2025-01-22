@@ -1,5 +1,6 @@
 local telescope = require('telescope.builtin')
 local neoscroll = require('neoscroll')
+local zenMode = require('zen-mode')
 local M = {}
 
 M.getVisualSelection = function()
@@ -37,6 +38,14 @@ end
 ---@param duration number
 M.scroll = function(scroll, duration)
   neoscroll.scroll(scroll, { duration = duration })
+end
+
+M.toggleZenMode = function()
+  zenMode.toggle({
+    window = {
+      width = .8 -- width will be 85% of the editor width
+    }
+  })
 end
 
 return M;

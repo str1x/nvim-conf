@@ -252,7 +252,16 @@ return {
   -- zen mode
   {
     "folke/zen-mode.nvim",
+    cmd = "ZenMode",
     opts = {},
+  },
+  -- dimming inactive code, integrated with zenmode
+  {
+    "folke/twilight.nvim",
+    cmd = { "Twilight", "TwilightEnable", "TwilightDisable" },
+    opts = function()
+      return require "configs.twilight"
+    end,
   },
   -- ui notifications, command, hover
   {

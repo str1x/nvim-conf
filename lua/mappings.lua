@@ -24,6 +24,7 @@ map("n", "<C-c>", "<cmd>%y+<CR>", { desc = "general copy whole file" })
 map("i", "jk", "<ESC>")
 map("i", "jj", "<ESC>")
 map("n", ";", ":", { desc = "CMD enter command mode" })
+map("n", "<leader>zm", utils.toggleZenMode, { desc = "Toggle zen mode" })
 -- relative numbers
 map("n", "<leader>n", "<cmd>set nu!<CR>", { desc = "toggle line number" })
 map("n", "<leader>rn", "<cmd>set rnu!<CR>", { desc = "toggle relative number" })
