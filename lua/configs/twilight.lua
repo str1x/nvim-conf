@@ -3,5 +3,5 @@ return {
     alpha = .4
   },
   context = 20,
-  treesitter = false,
+  treesitter = true,
 }
