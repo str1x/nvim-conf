@@ -1,4 +1,4 @@
-local options = {
+return {
   formatters_by_ft = {
     lua = { "stylua" },
     -- css = { "prettier" },
@@ -12,5 +12,3 @@ local options = {
   --   lsp_fallback = true,
   -- },
 }
-
-require("conform").setup(options)

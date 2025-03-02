@@ -63,7 +63,7 @@ return {
     "stevearc/conform.nvim",
     -- event = 'BufWritePre', -- uncomment for format on save
     config = function()
-      require "configs.conform"
+      return require "configs.conform"
     end,
   },
   -- git stuff
@@ -129,8 +129,16 @@ return {
           require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
         end,
       },
+      -- extensions
+      {
+        "onsails/lspkind.nvim",
+        opts = function()
+          return require "configs.lspkind"
+        end,
+      },
       -- cmp sources plugins
       {
+        "f3fora/cmp-spell",
         "saadparwaiz1/cmp_luasnip",
         "hrsh7th/cmp-nvim-lua",
         "hrsh7th/cmp-nvim-lsp",

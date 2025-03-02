@@ -1,34 +1,9 @@
 dofile(vim.g.base46_cache .. "cmp")
 
 local cmp = require "cmp"
+local lspkind = require "lspkind"
 
-local lspkind_comparator = function(conf)
-	local lsp_types = require("cmp.types").lsp
-	return function(entry1, entry2)
-		if entry1.source.name ~= "nvim_lsp" then
-			if entry2.source.name == "nvim_lsp" then
-				return false
-			else
-				return nil
-			end
-		end
-		local kind1 = lsp_types.CompletionItemKind[entry1:get_kind()]
-		local kind2 = lsp_types.CompletionItemKind[entry2:get_kind()]
-
-		local priority1 = conf.kind_priority[kind1] or 0
-		local priority2 = conf.kind_priority[kind2] or 0
-		if priority1 == priority2 then
-			return nil
-		end
-		return priority2 < priority1
-	end
-end
-
-local label_comparator = function(entry1, entry2)
-	return entry1.completion_item.label < entry2.completion_item.label
-end
-
-local options = {
+return {
   completion = { completeopt = "menu,menuone" },
 
   snippet = {
@@ -71,54 +46,44 @@ local options = {
     end, { "i", "s" }),
   },
 
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol', -- show only symbol annotations
+      maxwidth = {
+        -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+        -- can also be a function to dynamically calculate max width such as
+        -- menu = function() return math.floor(0.45 * vim.o.columns) end,
+        menu = 50, -- leading text (labelDetails)
+        abbr = 50, -- actual suggestion item
+      },
+      ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+      show_labelDetails = true, -- show labelDetails in menu. Disabled by default
+
+      before = function (entry, vim_item)
+        vim_item.menu = entry.source.name
+        return vim_item
+      end
+    })
+  },
+
   sources = {
-    { name = "nvim_lsp" },
-    { name = "luasnip" },
-    { name = "buffer" },
-    { name = "nvim_lua" },
-    { name = "path" },
+    { name = "nvim_lsp", priority = 10 },
+    { name = "luasnip", priority = 8 },
+    { name = "buffer", priority = 7 },
+    { name = "nvim_lua", priority = 5 },
+    { name = "spell", keyword_length = 3, priority = 5, keyword_pattern = [[\w\+]] },
+    { name = "path", priority = 4 },
   },
 
   sorting = {
+    priority_weight = 2,
     comparators = {
-      lspkind_comparator({
-        kind_priority = {
-          Parameter = 14,
-          Variable = 12,
-          Field = 11,
-          Property = 11,
-          Interface = 10,
-          Constant = 10,
-          Enum = 10,
-          EnumMember = 10,
-          Event = 10,
-          Function = 10,
-          Method = 10,
-          Operator = 10,
-          Reference = 10,
-          Struct = 10,
-          File = 8,
-          Folder = 8,
-          Class = 5,
-          Color = 5,
-          Module = 5,
-          Keyword = 2,
-          Constructor = 1,
-          Snippet = 0,
-          Text = 1,
-          TypeParameter = 1,
-          Unit = 1,
-          Value = 1,
-        },
-      }),
-      -- label_comparator,
+      cmp.config.compare.locality,
+      cmp.config.compare.recently_used,
+      cmp.config.compare.score,
       cmp.config.compare.offset,
-			cmp.config.compare.exact,
-			-- cmp.config.compare.score,
-			cmp.config.compare.recently_used,
-			-- cmp.config.compare.kind,
+      cmp.config.compare.order,
+      cmp.config.compare.exact,
     },
   },
 }
-
-return vim.tbl_deep_extend("force", options, require "nvchad.cmp")
