@@ -1,0 +1,43 @@
+{
+  "vbase": {
+    "prefix": "vbase",
+    "body": [
+      "<template>",
+      "\t<div>",
+      "",
+      "\t</div>",
+      "</template>",
+      "",
+      "<script>",
+      "",
+      "</script>",
+      "",
+      "<style module>",
+      "",
+      "</style>"
+    ],
+    "description": "Vue base SFC"
+  },
+  "vprops": {
+    "prefix": "vprops",
+    "body": [
+      "export type Props = {",
+      "\t${1:props}",
+      "}",
+      "defineProps<Props>();"
+    ],
+    "description": "Vue typescript props definition"
+  },
+  "vprops?": {
+    "prefix": "vprops?",
+    "body": [
+      "export type Props = {",
+      "\t${1:props}",
+      "}",
+      "withDefaults(defineProps<Props>(), {",
+      "\t${2:optional}",
+      "});"
+    ],
+    "description": "Vue typescript props definition with defaults"
+  }
+}

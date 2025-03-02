@@ -1,0 +1,22 @@
+{
+  "name": "personal-snippets",
+  "engines": {
+    "vscode": "^1.11.0"
+  },
+  "contributes": {
+    "snippets": [
+      {
+        "language": "vue",
+        "path": "./vue.json"
+      },
+      {
+        "language": ["javascript", "typescript", "vue"],
+        "path": "./javascript.json"
+      },
+      {
+        "language": "typescript",
+        "path": "./typescript.json"
+      }
+    ]
+  }
+}

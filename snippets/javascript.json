@@ -1,0 +1,42 @@
+{
+  "rfn": {
+    "prefix": "rfn",
+    "body": "(${1:args}) => ${2:return}",
+    "description": "Arrow function return"
+  },
+  "afn": {
+    "prefix": "afn",
+    "body": [
+      "(${1:args}) => {",
+      "\t${2:body}",
+      "}"
+    ],
+    "description": "Arrow function with body"
+  },
+  "/*": {
+    "prefix": "/*",
+    "body": [
+      "/**",
+      " * ${1:Comment.}$0",
+      " */"
+    ],
+    "description": "A simple JSDoc comment."
+  },
+  "/**": {
+    "prefix": "/**",
+    "body": [
+      "/**",
+      " * ${1:What it does}.",
+      " *",
+      " * @param ${3:name} - ${4:Parameter description.}",
+      " * @returns ${2:Type and description of the returned object.}",
+      " *",
+      " * @example",
+      " * ```",
+      " * ${5:Write me later.}$0",
+      " * ```",
+      " */"
+    ],
+    "description": "A full JSDoc comment with description, parameters, return, and example."
+  }
+}
