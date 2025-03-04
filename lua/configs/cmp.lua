@@ -71,8 +71,20 @@ return {
     { name = "luasnip", priority = 8 },
     { name = "buffer", priority = 7 },
     { name = "nvim_lua", priority = 5 },
-    { name = "spell", keyword_length = 3, priority = 5, keyword_pattern = [[\w\+]] },
     { name = "path", priority = 4 },
+    {
+      name = "spell",
+      keyword_length = 3,
+      priority = 2,
+      keyword_pattern = [[\w\+]],
+      option = {
+        keep_all_entries = false,
+        enable_in_context = function()
+          return require('cmp.config.context').in_treesitter_capture('spell')
+        end,
+        preselect_correct_word = true,
+      },
+    },
   },
 
   sorting = {
