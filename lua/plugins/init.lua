@@ -1,5 +1,18 @@
+--- get local plugin path by name
+---@param name string
+local function getLocalPlugin(name)
+  return vim.fn.stdpath('config') .. "/lua/plugins/" .. name
+end
+
 return {
   "nvim-lua/plenary.nvim",
+  {
+    dir = getLocalPlugin("keymap-switch.nvim"),
+    lazy = false,
+    opts = {
+      keymap = "russian-jcukenwin",
+    }
+  },
   {
     "nvchad/base46",
     build = function()
