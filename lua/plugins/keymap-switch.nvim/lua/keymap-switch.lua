@@ -42,7 +42,6 @@ end
 
 function M.switch()
   local mode = vim.fn.mode();
-  vim.print(vim.o.keymap .. "1");
   if (mode == 'i' or mode == 'c') then
     vim.api.nvim_feedkeys(switchKey, 'n', false)
     return
