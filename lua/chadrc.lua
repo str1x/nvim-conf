@@ -17,10 +17,24 @@ M.base46 = {
     separator_style = "arrow",
   },
 }
+
 M.ui = {
   telescope = {
-    style = 'bordered'
-  }
+    style = "bordered"
+  },
+  statusline = {
+    theme = "default",
+    separator_style = "block",
+    order = { "mode", "keyboard_layout", "file", "git", "%=", "lsp_msg", "%=", "diagnostics", "lsp", "cwd", "cursor" },
+    modules = {
+      keyboard_layout = function()
+        local icon = "󰌌"
+        local text = string.upper(require("keymap-switch").provider());
+        local hi_group = require("keymap-switch").condition() and 'St_cwd_icon' or 'St_InsertMode'
+        return "%#" .. hi_group .. "# " .. icon .. " " .. text .. " "
+      end,
+    },
+  },
 }
 
 return M
