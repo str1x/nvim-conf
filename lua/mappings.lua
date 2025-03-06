@@ -4,6 +4,7 @@ local telescope = require "telescope.builtin"
 local conform = require "conform"
 local tabufine = require "nvchad.tabufline"
 local nvchadThemes = require "nvchad.themes"
+local base46 = require "base46"
 local nvchadTerm = require "nvchad.term"
 --- input navigation
 map("i", "<C-b>", "<ESC>^i", { desc = "move beginning of line" })
@@ -126,6 +127,8 @@ map("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git
 map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
 map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
 map("n", "<leader>th", nvchadThemes.open, { desc = "telescope nvchad themes" })
+map("n", "<leader>tt", base46.toggle_theme, { desc = "toggle theme"})
+map("n", "<leader>to", base46.toggle_transparency, { desc = "toggle transparency"})
 map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "telescope find files" })
 map("n", "<leader>fa", "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>", { desc = "telescope find all files" })
 map("v", "<space>fz", function()
