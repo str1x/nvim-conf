@@ -29,10 +29,14 @@ o.ruler = false
 -- disable nvim intro
 opt.shortmess:append "sI"
 
+--max height completion menu
+o.pumheight = 10
+o.pumblend = 15
+
 o.signcolumn = "yes"
 o.splitbelow = true
 o.splitright = true
-o.timeoutlen = 400
+o.timeoutlen = 150
 o.undofile = true
 
 -- interval for writing swap file to disk, also used by gitsigns
